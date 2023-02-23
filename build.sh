@@ -57,7 +57,7 @@ else
     exit 1
 fi
 
-${MVN_CMD} clean package -P$Profile -Dmaven.test.skip=true
+${MVN_CMD} clean package -P$Profile -D maven.test.skip=true
 
 mkdir -p output/
 cp target/starrocks-spark*.jar ./output/

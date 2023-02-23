@@ -5,6 +5,7 @@ import com.starrocks.data.load.stream.properties.StreamLoadProperties;
 import com.starrocks.data.load.stream.properties.StreamLoadTableProperties;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -169,10 +170,14 @@ public class WriteStarRocksConfig implements StarRocksConfig, Serializable {
         Map<String, String> props = getProperties();
         String format = getFormat();
         String rowDelimiter = getRowDelimiter();
+        String columns = Arrays.stream(getColumns())
+                .map(f -> String.format("`%s`", f.trim().replace("`", "")))
+                .collect(Collectors.joining(","));
+
         StreamLoadTableProperties tableProperties = StreamLoadTableProperties.builder()
                 .database(getDatabase())
                 .table(getTable())
-                .columns(getColumns())
+                .columns(columns)
                 .streamLoadDataFormat("json".equalsIgnoreCase(format) ? StreamLoadDataFormat.JSON : new StreamLoadDataFormat.CSVFormat(rowDelimiter))
                 .addProperties(props)
                 .build();
