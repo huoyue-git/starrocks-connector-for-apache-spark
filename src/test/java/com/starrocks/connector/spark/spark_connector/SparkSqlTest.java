@@ -173,6 +173,7 @@ public class SparkSqlTest {
                 "4,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null\n", 
                 true,
                     false);
+                executeSql(stmt, String.format("drop table %s", tableName), "", false, false);
             }
         } catch (Exception e) {
         e.printStackTrace();
@@ -236,6 +237,7 @@ public class SparkSqlTest {
                 "4,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null\n", 
                 true,
                     false);
+                executeSql(stmt, String.format("drop table %s", tableName), "", false, false);
             }
         } catch (Exception e) {
         e.printStackTrace();
@@ -775,21 +777,6 @@ public class SparkSqlTest {
             true,
                 false);
  
-            spark_table_sql = "create TEMPORARY view primary_table_select \n" +
-            " USING starrocks OPTIONS ( \n" +
-            "  'starrocks.fenodes' = '"+ FE_URLS_HTTP + "',  \n"  +
-            "  'starrocks.table.identifier' = '" + DATABASE + "." +tableName + "',  \n" +
-            "  'user' = '"+ USER +"',  \n" +
-            "  'password' = '"+ PASS +"' \n" +
-            ");" ;
-            System.out.println(spark_table_sql);
-            spark.sql(spark_table_sql);
-
-            Dataset<Row> dataset = spark.sql("select * from primary_table_select order by 1;");
-            List<Row> rowList = dataset.collectAsList();
-            System.out.println(rowList.toString());
-
-
         } catch (Exception e) {
         e.printStackTrace();
         Assert.assertTrue(false);

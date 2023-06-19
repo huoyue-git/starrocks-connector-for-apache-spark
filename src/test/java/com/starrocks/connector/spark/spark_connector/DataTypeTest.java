@@ -510,11 +510,10 @@ public class DataTypeTest {
             .appName("Application")
             .getOrCreate();
 
-            sparkSession.conf().set("spark.sql.streaming.checkpointLocation", "/home/disk4/huoyue/tmp/spark/");
+            sparkSession.conf().set("spark.sql.streaming.checkpointLocation", "/home/disk4/huoyue//tmp/spark/");
             sparkSession.conf().set("spark.default.parallelism", 2);
 
             SQLContext sqlContext = new SQLContext(sparkSession);
-    
             String createTableSql = "create table dupl_table_types_array( " +
                 "c0 bigint, " +
                 "c1 ARRAY<bigint> not null, " +
@@ -539,9 +538,9 @@ public class DataTypeTest {
             Map<String, String> options = new HashMap<>();
             options.put("spark.starrocks.conf", "write");
             //options.put("spark.starrocks.write.fe.urls.http", String.format("%s:%s", FE_IP, FE_HTTPPORT));
-            options.put("spark.starrocks.fe.urls.http", "172.26.93.108:8030");
+            options.put("spark.starrocks.fe.urls.http", String.format("%s:%s", FE_IP, FE_HTTPPORT));
             //options.put("spark.starrocks.write.fe.urls.jdbc", String.format("jdbc:mysql://%s:%s", FE_IP, FE_QUERYPORT));
-            options.put("spark.starrocks.fe.urls.jdbc", "jdbc:mysql://172.26.93.108:9030");
+            options.put("spark.starrocks.fe.urls.jdbc", String.format("%s:%s", FE_IP, FE_HTTPPORT));
             options.put("spark.starrocks.database", DATABASE);
             options.put("spark.starrocks.table", "dupl_table_types_array");
             options.put("spark.starrocks.username", "root");
@@ -1535,7 +1534,7 @@ public static class KafkaMap implements MapFunction<Row, KafkaMessage> {
     }
 }
 
- 
+ /*
 public static class KafkaMessage implements Serializable {
     private Long c0;
     private Long[] c1;
@@ -1603,8 +1602,8 @@ public static class KafkaMessage implements Serializable {
 
 }
 }
+ */
 
-/* 
 public static class KafkaMessage implements Serializable {
     private Integer k0;
     private String v1;
@@ -1835,4 +1834,4 @@ public static class KafkaMessage implements Serializable {
 }
 
 }
-*/
+
